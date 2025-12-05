@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>Exclusive Coverage Report</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+
+    body {
+      font-family: "Noto Sans TC",
+        -apple-system, BlinkMacSystemFont,
+        "PingFang TC", "Microsoft JhengHei",
+        system-ui, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      /* 背景照 */
+      background: url("bg.jpg") center / cover no-repeat;
+      color: #1f2937;
+      overflow: hidden;
+    }
+
+    /* ✅ 大卡片：莫蘭迪粉（低彩度） */
+    .card {
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 28px 24px 30px;
+      border-radius: 24px;
+      max-width: 460px;
+      width: 92%;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.18);
+      border: 1px solid rgba(180, 160, 168, 0.45);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(160,140,150,0.35);
+      font-size: 0.78rem;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 1.6rem;
+      letter-spacing: 0.04em;
+    }
+
+    .sub {
+      margin: 0 0 14px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+      font-size: 0.78rem;
+    }
+
+    .tag {
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(160,140,150,0.35);
+    }
+
+    /* ✅ 文字框：極淡（幾乎沒有） */
+    .message {
+      min-height: 160px;
+      max-height: 260px;
+      overflow-y: auto;
+      margin-bottom: 16px;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.25);
+      font-size: 0.93rem;
+      line-height: 1.75;
+      white-space: pre-wrap;
+      text-align: left;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 22px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #c89faa, #b28a94);
+      color: #ffffff;
+      box-shadow: 0 10px 26px rgba(178,138,148,0.45);
+      cursor: pointer;
+    }
+
+    .hint {
+      margin-top: 8px;
+      font-size: 0.75rem;
+      opacity: 0.65;
+    }
+
+    .disclaimer {
+      margin-top: 14px;
+      font-size: 0.72rem;
+      opacity: 0.55;
+      text-align: center;
+    }
+
+    #finalChoice {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(250,245,247,0.9);
+      backdrop-filter: blur(10px);
+      z-index: 2;
+      text-align: center;
+    }
+
+    #finalChoice.show {
+      display: flex;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <div class="badge">📊 Exclusive Coverage · Birthday Edition</div>
+
+    <h1>【STRONG BUY】投資報告</h1>
+    <p class="sub">標的代號：慶慶 · 生日特別篇</p>
+
+    <div class="tags">
+      <span class="tag">Rating：Strong Buy</span>
+      <span class="tag">持有期間：Long Term</span>
+      <span class="tag">分析師：胖虎萱</span>
+    </div>
+
+    <div id="msg" class="message"></div>
+
+    <button id="btn">點我產出投資說明</button>
+    <p id="hint" class="hint">請閱讀以下內容</p>
+
+    <div class="disclaimer">
+      * 本研究不保證獲利，但保證很喜歡你(*‘ v`*)
+    </div>
+  </div>
+
+  <div id="finalChoice">
+    <div style="font-size:1.6rem;line-height:1.9;">
+      <div>Analysis completed.</div>
+      <div style="font-weight:600;margin-top:6px;">I choose you ❤️</div>
+    </div>
+  </div>
+
+  <script>
+    const text = `投資摘要：
+
+本研究由分析師「胖虎萱」負責，
+針對追蹤近兩年的標的——「慶慶」，
+進行長期觀察與深入分析。
+
+研究期間包含日常相處、
+情緒波動與生活細節，
+以及許多無法量化、
+卻非常重要的時刻 🫶🏻
+
+—
+
+綜合評估後，
+本分析師的最終結論是：
+
+認識你、跟你在一起
+是我這近兩年來，
+報酬率最高的一筆投資。
+
+慶慶生日快樂 🤍
+在未來的很多年裡，
+我都想繼續長期持有你 🥺`;
+
+    const btn = document.getElementById("btn");
+    const msg = document.getElementById("msg");
+    const finalChoice = document.getElementById("finalChoice");
+
+    let i = 0;
+    let typing = false;
+    let finished = false;
+
+    btn.addEventListener("click", () => {
+      if (!typing && !finished) {
+        typing = true;
+        msg.textContent = "";
+        btn.textContent = "分析進行中…";
+        typeNextChar();
+      } else if (!typing && finished) {
+        finalChoice.classList.add("show");
+      }
+    });
+
+    function typeNextChar() {
+      if (i < text.length) {
+        msg.textContent += text[i++];
+        const ch = text[i - 1];
+        setTimeout(typeNextChar, "，。、\n".includes(ch) ? 160 : 45);
+      } else {
+        typing = false;
+        finished = true;
+        btn.textContent = "我看完了，顯示最終結論";
+      }
+    }
+  </script>
+</body>
+</html>
