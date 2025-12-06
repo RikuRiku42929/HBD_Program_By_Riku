@@ -56,14 +56,24 @@
       letter-spacing: 0.03em;
     }
 
-    .hint {
+    .hint-block p {
       font-size: 0.9rem;
       color: #374151;
-      margin-bottom: 12px;
+      margin: 4px 0;
+      line-height: 1.7;
     }
 
-    input {
-      width: 100%;
+    #searchArea {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    #codeInput {
+      flex: 1;
+      min-width: 220px;
       padding: 10px;
       font-size: 1rem;
       border: 1px solid #9ca3af;
@@ -72,7 +82,6 @@
     }
 
     button {
-      margin-top: 14px;
       background: #0b3c8a;
       color: white;
       border: none;
@@ -81,6 +90,11 @@
       font-size: 0.95rem;
       cursor: pointer;
       letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    button:hover {
+      background: #0a357a;
     }
 
     #result {
@@ -111,35 +125,46 @@
   <div class="panel">
     <h2>重大資訊查詢</h2>
 
-    <p class="hint">
-      請輸入公司代碼以查詢相關重大資訊
-      本系統所揭露內容屬特殊情境之非公開資訊，
-      僅限特定對象於指定時間查閱。
+    <!-- ✅ 說明文字分兩段，比較工整 -->
+    <div class="hint-block" id="intro">
+      <p>本系統所揭露內容屬特殊情境之非公開資訊，僅限特定對象於指定時間查閱。</p>
+      <p>請輸入公司代碼以查詢相關重大資訊，並完成通關驗證程序，以確認閱讀資格。</p>
+    </div>
 
-      請完成通關驗證程序，
-      以確認閱讀資格。
-    </p>
+    <!-- ✅ 搜尋區塊，之後會被隱藏 -->
+    <div id="searchArea">
+      <input
+        id="codeInput"
+        placeholder="請輸入欲查詢之股票代碼"
+      >
+      <button onclick="search()">查詢</button>
+    </div>
 
-    <input
-      id="codeInput"
-      placeholder="請輸入公司代碼查詢"
-    >
-
-    <button onclick="search()">查詢</button>
-
+    <!-- ✅ 顯示結果的區塊 -->
     <div id="result"></div>
   </div>
 </main>
 
 <script>
+const input = document.getElementById("codeInput");
+const result = document.getElementById("result");
+const searchArea = document.getElementById("searchArea");
+const intro = document.getElementById("intro");
+
+// 讓 Enter 也能查詢
+input.addEventListener("keydown", e => {
+  if (e.key === "Enter") search();
+});
+
 function search() {
-  const code = document.getElementById("codeInput").value.trim();
-  const result = document.getElementById("result");
-  result.style.display = "block";
+  const code = input.value.trim();
+  if (!code) return;
+
+  let message = "";
 
   if (code === "1210") {
-    result.textContent =
- `【資訊揭露程序完成】
+    message =
+`【資訊揭露程序完成】
 
 經系統驗證確認，
 本次驗證關鍵字正確，
@@ -156,31 +181,53 @@ function search() {
 
 請依卡片指示，
 關閉瀏覽器並前往下一頁繼續閱讀。`;
-  }
-
-  else if (code === "7610") {
-    result.textContent =
+  } else if (code === "7610") {
+    message =
 `公司名稱：聯友金屬股份有限公司
 產業別：金屬製品業
 
 備註：
-本公司不屬於本系統之揭露標的，僅供附加用途。
-但本公司潛力無窮，後續營運表現仍有觀察空間，股價走勢具潛在上漲機會。`;
-  }
+本公司不屬於本系統之主要揭露標的，
+僅供附加查詢用途。
 
-  else if (code === "2891") {
-    result.textContent =
+補充說明：
+後續營運表現仍有觀察空間，
+股價走勢具潛在上漲機會。`;
+  } else if (code === "2891") {
+    message =
 `公司名稱：中國信託金融控股股份有限公司
 產業別：金融保險業
 
 提醒：
-本公司不屬於本系統之揭露標的，僅供附加用途。
-本查詢系統的核心用途仍為特定生日重大揭露。`;
+本公司不屬於本系統之主要揭露標的，
+僅供附加查詢用途。
+
+本查詢系統的核心目的，
+仍為特定生日重大揭露。`;
+  } else {
+    // 錯誤碼就不要轉場，用原本區塊＋一次顯示就好
+    result.style.display = "block";
+    result.textContent = "查無相關重大資訊，請確認代碼是否正確。";
+    return;
   }
 
-  else {
-    result.textContent =
-"查無相關重大資訊，請確認代碼是否正確。";
+  // ✅ 轉頁感：把說明＋輸入區藏起來，只留下結果
+  intro.style.display = "none";
+  searchArea.style.display = "none";
+  result.style.display = "block";
+
+  // ✅ 打字機效果
+  typeText(message, 0);
+}
+
+function typeText(text, i) {
+  if (i === 0) result.textContent = "";
+
+  if (i < text.length) {
+    result.textContent += text[i];
+    const ch = text[i];
+    const delay = "，。、…\n".includes(ch) ? 160 : 40;
+    setTimeout(() => typeText(text, i + 1), delay);
   }
 }
 </script>
