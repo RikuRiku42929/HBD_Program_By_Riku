@@ -2,18 +2,18 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>公開資訊觀測站｜重大資訊查詢</title>
+  <title>MOPS 公開資訊觀測站｜重大資訊查詢</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- ✅ Google 搜尋描述 -->
+  <!-- ✅ Google 可搜尋（不影響畫面） -->
   <meta name="description" content="胖虎萱給慶慶的生日驚喜">
 
   <style>
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont,
-                   "PingFang TC", "Microsoft JhengHei",
-                   system-ui, sans-serif;
+        "PingFang TC", "Microsoft JhengHei",
+        system-ui, sans-serif;
       background: #f2f4f7;
       color: #111827;
     }
@@ -21,13 +21,13 @@
     header {
       background: linear-gradient(180deg, #0b3c8a, #092f6e);
       color: white;
-      padding: 16px 28px;
+      padding: 16px 24px;
     }
 
     header h1 {
       margin: 0;
-      font-size: 1.35rem;
-      letter-spacing: 0.02em;
+      font-size: 1.4rem;
+      letter-spacing: 0.03em;
     }
 
     header p {
@@ -37,125 +37,79 @@
     }
 
     main {
-      max-width: 1000px;
-      margin: 36px auto;
-      padding: 0 24px;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
     }
 
     .panel {
       background: white;
       border: 1px solid #d1d6e0;
-      border-radius: 6px;
+      border-radius: 8px;
       padding: 24px;
       box-shadow: 0 10px 36px rgba(0,0,0,0.08);
     }
 
     h2 {
       margin-top: 0;
-      font-size: 1.1rem;
-      letter-spacing: 0.03em;
+      font-size: 1.15rem;
+      letter-spacing: 0.04em;
     }
 
-    .hint-block p {
+    .hint {
       font-size: 0.9rem;
       color: #374151;
-      margin: 4px 0;
       line-height: 1.7;
+      margin-bottom: 16px;
     }
 
-    #searchArea {
-      margin-top: 16px;
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    #codeInput {
-      flex: 1;
-      min-width: 220px;
-      padding: 10px;
+    input {
+      width: 100%;
+      padding: 10px 12px;
       font-size: 1rem;
       border: 1px solid #9ca3af;
       border-radius: 4px;
       box-sizing: border-box;
+      margin-top: 6px;
     }
 
     button {
+      margin-top: 14px;
       background: #0b3c8a;
       color: white;
       border: none;
       border-radius: 4px;
-      padding: 10px 18px;
+      padding: 10px 20px;
       font-size: 0.95rem;
       cursor: pointer;
       letter-spacing: 0.03em;
-      white-space: nowrap;
-    }
-
-    button:hover {
-      background: #0a357a;
     }
 
     #result {
       display: none;
-      margin-top: 26px;
-      padding-top: 18px;
-      border-top: 1px dashed #c7cdd9;
-      line-height: 1.75;
-      font-size: 0.95rem;
+      margin-top: 28px;
     }
 
-    /* ✅ MOPS 風格表格 */
-    .result-title {
-      font-size: 1rem;
-      font-weight: 600;
-      margin: 0 0 8px;
-      letter-spacing: 0.03em;
-    }
-
-    .mops-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.9rem;
-      margin-top: 6px;
-    }
-
-    .mops-table thead tr {
-      background: #1f4da0;
-      color: #ffffff;
-    }
-
-    .mops-table th,
-    .mops-table td {
-      border: 1px solid #cbd5e1;
-      padding: 6px 8px;
-      text-align: left;
-    }
-
-    .mops-table tbody tr:nth-child(odd) {
-      background: #f1f5fb;
-    }
-
-    .mops-table tbody tr:nth-child(even) {
+    .reveal-box {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 22px 24px;
       background: #ffffff;
-    }
-
-    .note {
-      margin-top: 14px;
-      font-size: 0.85rem;
-      color: #4b5563;
-      line-height: 1.6;
+      border: 1px solid #d1d6e0;
+      border-radius: 8px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+      white-space: pre-wrap;
+      line-height: 1.9;
+      letter-spacing: 0.04em;
+      font-size: 0.95rem;
     }
   </style>
 </head>
 
 <body>
 
-<!-- ✅ Google 搜尋關鍵字（不顯示在畫面） -->
-<div style="display:none;">
-胖虎萱給慶慶的生日驚喜
-</div>
+<!-- ✅ Google 關鍵字（隱藏） -->
+<div style="display:none;">胖虎萱給慶慶的生日驚喜</div>
 
 <header>
   <h1>MOPS 公開資訊觀測站</h1>
@@ -166,41 +120,37 @@
   <div class="panel">
     <h2>重大資訊查詢</h2>
 
-    <!-- ✅ 說明文字分段，比較工整 -->
-    <div class="hint-block" id="intro">
-      <p>本系統所揭露內容屬特殊情境之非公開資訊，僅限特定對象於指定時間查閱。</p>
-      <p>請輸入公司代碼以查詢相關重大資訊，並完成通關驗證程序，以確認閱讀資格。</p>
-    </div>
+    <p class="hint">
+      請輸入公司代碼以查詢相關重大資訊。<br>
+      本系統資料屬特殊情境揭露內容，<br>
+      僅限特定對象於指定時間查閱。
+    </p>
 
-    <!-- ✅ 搜尋區塊 -->
-    <div id="searchArea">
-      <input
-        id="codeInput"
-        placeholder="請輸入公司代碼（1210 / 7610 / 2891）"
-      >
-      <button onclick="search()">查詢</button>
-    </div>
+    <input id="codeInput" placeholder="請輸入欲查詢之股票代碼">
+    <button onclick="search()">查詢</button>
 
-    <!-- ✅ 顯示結果 -->
-    <div id="result"></div>
+    <div id="result">
+      <div class="reveal-box" id="revealText"></div>
+    </div>
   </div>
 </main>
 
 <script>
-const input = document.getElementById("codeInput");
-const result = document.getElementById("result");
-const searchArea = document.getElementById("searchArea");
-const intro = document.getElementById("intro");
+function search() {
+  const code = document.getElementById("codeInput").value.trim();
+  const box = document.getElementById("revealText");
+  const result = document.getElementById("result");
+  box.textContent = "";
+  result.style.display = "block";
 
-/* 1210 的文字內容（打字機） */
-const message1210 =
-`【資訊揭露程序完成】
+  const texts = {
+    "1210": `【資訊揭露程序完成】
 
 經系統驗證確認，
-本次驗證關鍵字正確，
+本次查詢關鍵字正確，
 揭露程序已完成。
 
-本頁面僅作為身分確認用途，
+本頁面僅作為身分驗證用途，
 未包含最終結論。
 
 —
@@ -210,107 +160,42 @@ const message1210 =
 而是為特定對象所保留。
 
 請依卡片指示，
-關閉瀏覽器並前往下一頁繼續閱讀。`;
+關閉瀏覽器並前往下一頁繼續閱讀。`,
 
-/* Enter 也可以觸發查詢 */
-input.addEventListener("keydown", e => {
-  if (e.key === "Enter") search();
-});
+    "7610": `公司名稱：聯友金屬股份有限公司
+產業別：金屬製品業
 
-function search() {
-  const code = input.value.trim();
-  if (!code) return;
+備註：
+本公司不屬於本系統既定揭露標的，
+僅作為附加比對用途。
 
-  // 先清空畫面
-  result.textContent = "";
-  result.innerHTML = "";
-  result.style.display = "block";
+惟依近期營運條件與產業觀察，
+後續仍具持續成長與上行潛力，
+屬可長期觀察之標的。`,
 
-  if (code === "1210") {
-    // ✅ 轉頁感：把說明 + 搜尋藏起來，只剩結果
-    intro.style.display = "none";
-    searchArea.style.display = "none";
-    typeText(message1210, 0);   // 打字機效果
+    "2891": `公司名稱：中國信託金融控股股份有限公司
+產業別：金融保險業
+
+提醒：
+本資料僅供系統測試與附加顯示用途，
+本查詢系統核心揭露內容，
+仍為特定生日重大資訊。`
+  };
+
+  if (!texts[code]) {
+    box.textContent = "查無相關重大資訊，請確認代碼是否正確。";
+    return;
   }
 
-  else if (code === "7610") {
-    intro.style.display = "none";
-    searchArea.style.display = "none";
-
-    result.innerHTML =
-      '<div class="result-title">公司基本資料</div>' +
-      '<table class="mops-table">' +
-      '  <thead>' +
-      '    <tr>' +
-      '      <th>Company Name</th>' +
-      '      <th>Code</th>' +
-      '      <th>Market</th>' +
-      '      <th>Industry sector</th>' +
-      '    </tr>' +
-      '  </thead>' +
-      '  <tbody>' +
-      '    <tr>' +
-      '      <td>聯友金屬股份有限公司</td>' +
-      '      <td>7610</td>' +
-      '      <td>上市公司</td>' +
-      '      <td>金屬製品業</td>' +
-      '    </tr>' +
-      '  </tbody>' +
-      '</table>' +
-      '<div class="note">' +
-      '備註：本公司不屬於本系統之主要揭露標的，' +
-      '僅供附加查詢用途。<br>' +
-      '補充說明：後續營運表現仍有觀察空間，股價走勢具潛在上漲機會。' +
-      '</div>';
-  }
-
-  else if (code === "2891") {
-    intro.style.display = "none";
-    searchArea.style.display = "none";
-
-    result.innerHTML =
-      '<div class="result-title">公司基本資料</div>' +
-      '<table class="mops-table">' +
-      '  <thead>' +
-      '    <tr>' +
-      '      <th>Company Name</th>' +
-      '      <th>Code</th>' +
-      '      <th>Market</th>' +
-      '      <th>Industry sector</th>' +
-      '    </tr>' +
-      '  </thead>' +
-      '  <tbody>' +
-      '    <tr>' +
-      '      <td>中國信託金融控股股份有限公司</td>' +
-      '      <td>2891</td>' +
-      '      <td>上市公司</td>' +
-      '      <td>金融保險業（金融控股）</td>' +
-      '    </tr>' +
-      '  </tbody>' +
-      '</table>' +
-      '<div class="note">' +
-      '提醒：本公司不屬於本系統之主要揭露標的，僅供附加查詢用途。<br>' +
-      '本查詢系統的核心目的，仍為特定生日重大揭露。' +
-      '</div>';
-  }
-
-  else {
-    // 錯誤代碼：不要轉頁，保留輸入區
-    intro.style.display = "block";
-    searchArea.style.display = "flex";
-    result.textContent = "查無相關重大資訊，請確認代碼是否正確。";
-  }
+  typeText(texts[code], 0);
 }
 
-/* ✅ 打字機效果：只給 1210 用 */
 function typeText(text, i) {
-  if (i === 0) result.textContent = "";
-
+  const box = document.getElementById("revealText");
   if (i < text.length) {
-    result.textContent += text[i];
+    box.textContent += text[i];
     const ch = text[i];
-    const delay = "，。、…\n".includes(ch) ? 160 : 40;
-    setTimeout(() => typeText(text, i + 1), delay);
+    setTimeout(() => typeText(text, i + 1), "，。、…\n".includes(ch) ? 160 : 40);
   }
 }
 </script>
