@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>公開資訊觀測站 重大資訊資訊揭露</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  margin:0;
+  background:#eef1f5;
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  color:#1f2937;
+}
+
+/* ===== Header ===== */
+.header{
+  background:linear-gradient(#2a4f9c,#1f3f82);
+  color:#fff;
+  padding:14px 24px;
+}
+.header h1{
+  margin:0;
+  font-size:1.35rem;
+  letter-spacing:.06em;
+}
+.header small{
+  opacity:.85;
+  font-size:.8rem;
+}
+
+/* ===== Layout ===== */
+.container{
+  max-width:1100px;
+  margin:24px auto;
+  padding:0 18px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:2.4fr 1fr;
+  gap:18px;
+}
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr;}
+}
+
+/* ===== Panels ===== */
+.panel{
+  background:#fff;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+  border-radius:3px;
+  padding:22px 24px 26px;
+}
+.side{
+  background:#f8fafc;
+}
+
+/* ===== Text ===== */
+.section{
+  font-size:.95rem;
+  line-height:1.9;
+  white-space:pre-line;
+}
+
+/* ===== Search ===== */
+.search{
+  margin-top:20px;
+  display:flex;
+  gap:6px;
+}
+input{
+  flex:1;
+  padding:9px 10px;
+  font-size:.9rem;
+  border:1px solid #9ca3af;
+}
+button{
+  padding:9px 20px;
+  font-size:.85rem;
+  border:1px solid #6b7280;
+  background:#e5e7eb;
+  cursor:pointer;
+}
+button:hover{background:#d1d5db;}
+.hint{
+  font-size:.75rem;
+  color:#6b7280;
+  margin-top:8px;
+}
+.error{
+  font-size:.75rem;
+  color:#b91c1c;
+  margin-top:6px;
+  min-height:1em;
+}
+
+/* ===== Result ===== */
+.result{
+  margin-top:26px;
+  font-size:.95rem;
+  line-height:1.9;
+  white-space:pre-wrap;
+}
+
+/* ===== Side meta ===== */
+.meta div{
+  border-bottom:1px dotted #cbd5e1;
+  padding-bottom:6px;
+  margin-bottom:10px;
+  font-size:.8rem;
+}
+.meta strong{
+  display:block;
+  color:#111827;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h1>MOPS 公開資訊觀測站</h1>
+  <small>Market Observation Post System</small>
+</div>
+
+<div class="container">
+  <div class="grid">
+
+    <!-- 主內容 -->
+    <div class="panel">
+      <div id="intro" class="section">
+本系統所揭露內容屬特殊情境之非公開資訊，
+僅限特定對象於指定時間查閱。
+
+請完成通關驗證程序，
+以確認閱讀資格。
+      </div>
+
+      <div id="searchArea">
+        <div class="search">
+          <input id="q" placeholder="請輸入股票代碼查詢">
+          <button id="go">確認</button>
+        </div>
+        <div class="hint">請輸入欲查詢公司之股票代碼。</div>
+        <div id="error" class="error"></div>
+      </div>
+
+      <div id="result" class="result"></div>
+    </div>
+
+    <!-- 側欄 -->
+    <div class="panel side">
+      <div class="meta">
+        <div>
+          <strong>文件類型</strong>
+          特殊資訊揭露
+        </div>
+        <div>
+          <strong>揭露狀態</strong>
+          待驗證
+        </div>
+        <div>
+          <strong>適用對象</strong>
+          僅限本人
+        </div>
+        <div>
+          <strong>有效期限</strong>
+          僅限閱覽公開資訊時
+        </div>
+        <div>
+          <strong>注意事項</strong>
+          本揭露不具投資建議性質
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const input = document.getElementById("q");
+const btn = document.getElementById("go");
+const err = document.getElementById("error");
+const result = document.getElementById("result");
+const intro = document.getElementById("intro");
+const searchArea = document.getElementById("searchArea");
+
+/* ===== 1210：只屬於他的那段 ===== */
+const message1210 = `【資訊揭露程序完成】
+
+系統確認通關碼正確，
+身分驗證已通過。
+
+本頁僅用於資格確認，
+未包含最終結論。
+
+—
+
+接下來的內容，
+已不再屬於公開資訊，
+而是為特定對象所保留。
+
+請依卡片指示，
+關閉瀏覽器並前往下一頁繼續閱讀。`;
+
+/* ===== 7610：聯友金屬（理性世界） ===== */
+const message7610 = `【公司基本資料】
+
+公司名稱：聯友金屬股份有限公司  
+公司代碼：7610  
+產業別：金屬製品業  
+
+—
+
+【營運概況】
+
+聯友金屬主要從事金屬材料加工與製造，
+產品應用涵蓋工業用途及客製化需求。
+
+公司以穩定產能配置、
+品質控管及長期客戶關係為核心，
+持續提升製程效率與競爭力。`;
+
+/* ===== 2891：中信金控 ===== */
+const message2891 = `【公司基本資料】
+
+公司名稱：中信金融控股股份有限公司  
+公司代碼：2891  
+產業別：金融保險業（金融控股）  
+
+—
+
+【營運概況】
+
+中信金控旗下包含銀行、壽險、
+證券與資產管理等子公司，
+提供整合式金融服務。
+
+營運重點涵蓋零售金融、
+企業金融與財富管理等領域，
+並透過數位金融與國際布局，
+持續擴大客群與市場版圖。`;
+
+btn.onclick = verify;
+input.onkeydown = e => { if (e.key === "Enter") verify(); };
+
+function verify(){
+  const v = input.value.trim();
+  if(!v) return;
+
+  err.textContent="";
+  intro.style.display="none";
+  searchArea.style.display="none";
+  result.textContent="";
+
+  if(v==="1210"){
+    typeText(message1210,0);
+  }else if(v==="7610"){
+    typeText(message7610,0);
+  }else if(v==="2891"){
+    typeText(message2891,0);
+  }else{
+    intro.style.display="block";
+    searchArea.style.display="block";
+    err.textContent="通關碼錯誤，請重新確認。";
+  }
+}
+
+function typeText(text,i){
+  if(i<=text.length){
+    result.textContent=text.slice(0,i);
+    const c = text[i-1];
+    setTimeout(
+      () => typeText(text,i+1),
+      "，。\n".includes(c) ? 160 : 40
+    );
+  }
+}
+</script>
+
+</body>
+</html>
