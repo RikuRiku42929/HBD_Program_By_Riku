@@ -1,156 +1,197 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <title>MOPS 公開資訊觀測站｜重大資訊查詢</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<title>公開資訊觀測站 重大資訊資訊揭露</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- ✅ Google 可搜尋（不影響畫面） -->
-  <meta name="description" content="胖虎萱給慶慶的生日驚喜">
+<style>
+body{
+  margin:0;
+  background:#eef1f5;
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  color:#1f2937;
+}
 
-  <style>
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont,
-        "PingFang TC", "Microsoft JhengHei",
-        system-ui, sans-serif;
-      background: #f2f4f7;
-      color: #111827;
-    }
+/* ===== Header ===== */
+.header{
+  background:linear-gradient(#2a4f9c,#1f3f82);
+  color:#fff;
+  padding:14px 24px;
+}
+.header h1{
+  margin:0;
+  font-size:1.35rem;
+  letter-spacing:.06em;
+}
+.header small{
+  opacity:.85;
+  font-size:.8rem;
+}
 
-    header {
-      background: linear-gradient(180deg, #0b3c8a, #092f6e);
-      color: white;
-      padding: 16px 24px;
-    }
+/* ===== Layout ===== */
+.container{
+  max-width:1100px;
+  margin:24px auto;
+  padding:0 18px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:2.4fr 1fr;
+  gap:18px;
+}
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr;}
+}
 
-    header h1 {
-      margin: 0;
-      font-size: 1.4rem;
-      letter-spacing: 0.03em;
-    }
+/* ===== Panels ===== */
+.panel{
+  background:#fff;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+  border-radius:3px;
+  padding:22px 24px 26px;
+}
+.side{
+  background:#f8fafc;
+}
 
-    header p {
-      margin: 4px 0 0;
-      font-size: 0.85rem;
-      opacity: 0.85;
-    }
+/* ===== Text ===== */
+.section{
+  font-size:.95rem;
+  line-height:1.9;
+  white-space:pre-line;
+}
 
-    main {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
+/* ===== Search ===== */
+.search{
+  margin-top:20px;
+  display:flex;
+  gap:6px;
+}
+input{
+  flex:1;
+  padding:9px 10px;
+  font-size:.9rem;
+  border:1px solid #9ca3af;
+}
+button{
+  padding:9px 20px;
+  font-size:.85rem;
+  border:1px solid #6b7280;
+  background:#e5e7eb;
+  cursor:pointer;
+}
+button:hover{background:#d1d5db;}
+.hint{
+  font-size:.75rem;
+  color:#6b7280;
+  margin-top:8px;
+}
+.error{
+  font-size:.75rem;
+  color:#b91c1c;
+  margin-top:6px;
+  min-height:1em;
+}
 
-    .panel {
-      background: white;
-      border: 1px solid #d1d6e0;
-      border-radius: 8px;
-      padding: 24px;
-      box-shadow: 0 10px 36px rgba(0,0,0,0.08);
-    }
+/* ===== Result ===== */
+.result{
+  margin-top:26px;
+  font-size:.95rem;
+  line-height:1.9;
+  white-space:pre-wrap;
+}
 
-    h2 {
-      margin-top: 0;
-      font-size: 1.15rem;
-      letter-spacing: 0.04em;
-    }
-
-    .hint {
-      font-size: 0.9rem;
-      color: #374151;
-      line-height: 1.7;
-      margin-bottom: 16px;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px 12px;
-      font-size: 1rem;
-      border: 1px solid #9ca3af;
-      border-radius: 4px;
-      box-sizing: border-box;
-      margin-top: 6px;
-    }
-
-    button {
-      margin-top: 14px;
-      background: #0b3c8a;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      padding: 10px 20px;
-      font-size: 0.95rem;
-      cursor: pointer;
-      letter-spacing: 0.03em;
-    }
-
-    #result {
-      display: none;
-      margin-top: 28px;
-    }
-
-    .reveal-box {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 22px 24px;
-      background: #ffffff;
-      border: 1px solid #d1d6e0;
-      border-radius: 8px;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.08);
-      white-space: pre-wrap;
-      line-height: 1.9;
-      letter-spacing: 0.04em;
-      font-size: 0.95rem;
-    }
-  </style>
+/* ===== Side meta ===== */
+.meta div{
+  border-bottom:1px dotted #cbd5e1;
+  padding-bottom:6px;
+  margin-bottom:10px;
+  font-size:.8rem;
+}
+.meta strong{
+  display:block;
+  color:#111827;
+}
+</style>
 </head>
 
 <body>
 
-<!-- ✅ Google 關鍵字（隱藏） -->
-<div style="display:none;">胖虎萱給慶慶的生日驚喜</div>
-
-<header>
+<div class="header">
   <h1>MOPS 公開資訊觀測站</h1>
-  <p>Market Observation Post System</p>
-</header>
+  <small>Market Observation Post System</small>
+</div>
 
-<main>
-  <div class="panel">
-    <h2>重大資訊查詢</h2>
+<div class="container">
+  <div class="grid">
 
-    <p class="hint">
-      請輸入公司代碼以查詢相關重大資訊。<br>
-      本系統資料屬特殊情境揭露內容，<br>
-      僅限特定對象於指定時間查閱。
-    </p>
+    <!-- 主內容 -->
+    <div class="panel">
+      <div id="intro" class="section">
+本系統所揭露內容屬特殊情境之非公開資訊，
+僅限特定對象於指定時間查閱。
 
-    <input id="codeInput" placeholder="請輸入欲查詢之股票代碼">
-    <button onclick="search()">查詢</button>
+請完成通關驗證程序，
+以確認閱讀資格。
+      </div>
 
-    <div id="result">
-      <div class="reveal-box" id="revealText"></div>
+      <div id="searchArea">
+        <div class="search">
+          <input id="q" placeholder="請輸入股票代碼查詢">
+          <button id="go">確認</button>
+        </div>
+        <div class="hint">請輸入欲查詢公司之股票代碼。</div>
+        <div id="error" class="error"></div>
+      </div>
+
+      <div id="result" class="result"></div>
     </div>
+
+    <!-- 側欄 -->
+    <div class="panel side">
+      <div class="meta">
+        <div>
+          <strong>文件類型</strong>
+          特殊資訊揭露
+        </div>
+        <div>
+          <strong>揭露狀態</strong>
+          待驗證
+        </div>
+        <div>
+          <strong>適用對象</strong>
+          僅限本人
+        </div>
+        <div>
+          <strong>有效期限</strong>
+          僅限閱覽公開資訊時
+        </div>
+        <div>
+          <strong>注意事項</strong>
+          本揭露不具投資建議性質
+        </div>
+      </div>
+    </div>
+
   </div>
-</main>
+</div>
 
 <script>
-function search() {
-  const code = document.getElementById("codeInput").value.trim();
-  const box = document.getElementById("revealText");
-  const result = document.getElementById("result");
-  box.textContent = "";
-  result.style.display = "block";
+const input = document.getElementById("q");
+const btn = document.getElementById("go");
+const err = document.getElementById("error");
+const result = document.getElementById("result");
+const intro = document.getElementById("intro");
+const searchArea = document.getElementById("searchArea");
 
-  const texts = {
-    "1210": `【資訊揭露程序完成】
+/* ===== 1210：只屬於他的那段 ===== */
+const message1210 = `【資訊揭露程序完成】
 
-經系統驗證確認，
-本次查詢關鍵字正確，
-揭露程序已完成。
+系統確認通關碼正確，
+身分驗證已通過。
 
-本頁面僅作為身分驗證用途，
+本頁僅用於資格確認，
 未包含最終結論。
 
 —
@@ -160,10 +201,16 @@ function search() {
 而是為特定對象所保留。
 
 請依卡片指示，
-關閉瀏覽器並前往下一頁繼續閱讀。`,
+關閉瀏覽器並前往下一頁繼續閱讀。`;
 
-    "7610": `公司名稱：聯友金屬股份有限公司
-產業別：金屬製品業
+/* ===== 7610：聯友金屬（理性世界） ===== */
+const message7610 = `【公司基本資料】
+
+公司名稱：聯友金屬股份有限公司  
+公司代碼：7610  
+產業別：金屬製品業  
+
+—
 
 備註：
 本公司不屬於本系統既定揭露標的，
@@ -171,31 +218,66 @@ function search() {
 
 惟依近期營運條件與產業觀察，
 後續仍具持續成長與上行潛力，
-屬可長期觀察之標的。`,
+屬可長期觀察之標的。`;
 
-    "2891": `公司名稱：中國信託金融控股股份有限公司
-產業別：金融保險業
+/* ===== 2891：中信金控 ===== */
+const message2891 = `【公司基本資料】
+
+公司名稱：中信金融控股股份有限公司  
+公司代碼：2891  
+產業別：金融保險業（金融控股）  
+
+—
+
+【營運概況】
+
+中信金控旗下包含銀行、壽險、
+證券與資產管理等子公司，
+提供整合式金融服務。
+
+營運重點涵蓋零售金融、
+企業金融與財富管理等領域，
+並透過數位金融與國際布局，
+持續擴大客群與市場版圖。
 
 提醒：
 本資料僅供系統測試與附加顯示用途，
 本查詢系統核心揭露內容，
-仍為特定生日重大資訊。`
-  };
+仍為特定生日重大資訊。`;
 
-  if (!texts[code]) {
-    box.textContent = "查無相關重大資訊，請確認代碼是否正確。";
-    return;
+btn.onclick = verify;
+input.onkeydown = e => { if (e.key === "Enter") verify(); };
+
+function verify(){
+  const v = input.value.trim();
+  if(!v) return;
+
+  err.textContent="";
+  intro.style.display="none";
+  searchArea.style.display="none";
+  result.textContent="";
+
+  if(v==="1210"){
+    typeText(message1210,0);
+  }else if(v==="7610"){
+    typeText(message7610,0);
+  }else if(v==="2891"){
+    typeText(message2891,0);
+  }else{
+    intro.style.display="block";
+    searchArea.style.display="block";
+    err.textContent="通關碼錯誤，請重新確認。";
   }
-
-  typeText(texts[code], 0);
 }
 
-function typeText(text, i) {
-  const box = document.getElementById("revealText");
-  if (i < text.length) {
-    box.textContent += text[i];
-    const ch = text[i];
-    setTimeout(() => typeText(text, i + 1), "，。、…\n".includes(ch) ? 160 : 40);
+function typeText(text,i){
+  if(i<=text.length){
+    result.textContent=text.slice(0,i);
+    const c = text[i-1];
+    setTimeout(
+      () => typeText(text,i+1),
+      "，。\n".includes(c) ? 160 : 40
+    );
   }
 }
 </script>
